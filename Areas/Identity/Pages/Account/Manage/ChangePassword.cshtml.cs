@@ -9,19 +9,19 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using ronwell_assignment.Data;
+using ronwell_assignment.Models;
 
 namespace ronwell_assignment.Areas.Identity.Pages.Account.Manage
 {
     public class ChangePasswordModel : PageModel
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<EmployerUserApplication> _userManager;
+        private readonly SignInManager<EmployerUserApplication> _signInManager;
         private readonly ILogger<ChangePasswordModel> _logger;
 
         public ChangePasswordModel(
-            UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
+            UserManager<EmployerUserApplication> userManager,
+            SignInManager<EmployerUserApplication> signInManager,
             ILogger<ChangePasswordModel> logger)
         {
             _userManager = userManager;

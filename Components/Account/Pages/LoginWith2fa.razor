@@ -3,9 +3,10 @@
 @using System.ComponentModel.DataAnnotations
 @using Microsoft.AspNetCore.Identity
 @using ronwell_assignment.Data
+@using ronwell_assignment.Models
 
-@inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<EmployerUserApplication> SignInManager
+@inject UserManager<EmployerUserApplication> UserManager
 @inject IdentityRedirectManager RedirectManager
 @inject ILogger<LoginWith2fa> Logger
 
@@ -46,7 +47,7 @@
 
 @code {
     private string? message;
-    private ApplicationUser user = default!;
+    private EmployerUserApplication user = default!;
 
     [SupplyParameterFromForm]
     private InputModel Input { get; set; } = new();

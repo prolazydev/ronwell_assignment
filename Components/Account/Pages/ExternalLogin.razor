@@ -7,11 +7,12 @@
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.WebUtilities
 @using ronwell_assignment.Data
+@using ronwell_assignment.Models
 
-@inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager
-@inject IUserStore<ApplicationUser> UserStore
-@inject IEmailSender<ApplicationUser> EmailSender
+@inject SignInManager<EmployerUserApplication> SignInManager
+@inject UserManager<EmployerUserApplication> UserManager
+@inject IUserStore<EmployerUserApplication> UserStore
+@inject IEmailSender<EmployerUserApplication> EmailSender
 @inject NavigationManager NavigationManager
 @inject IdentityRedirectManager RedirectManager
 @inject ILogger<ExternalLogin> Logger
@@ -164,26 +165,26 @@
         message = $"Error: {string.Join(",", result.Errors.Select(error => error.Description))}";
     }
 
-    private ApplicationUser CreateUser()
+    private EmployerUserApplication CreateUser()
     {
         try
         {
-            return Activator.CreateInstance<ApplicationUser>();
+            return Activator.CreateInstance<EmployerUserApplication>();
         }
         catch
         {
-            throw new InvalidOperationException($"Can't create an instance of '{nameof(ApplicationUser)}'. " +
-                $"Ensure that '{nameof(ApplicationUser)}' is not an abstract class and has a parameterless constructor");
+            throw new InvalidOperationException($"Can't create an instance of '{nameof(EmployerUserApplication)}'. " +
+                $"Ensure that '{nameof(EmployerUserApplication)}' is not an abstract class and has a parameterless constructor");
         }
     }
 
-    private IUserEmailStore<ApplicationUser> GetEmailStore()
+    private IUserEmailStore<EmployerUserApplication> GetEmailStore()
     {
         if (!UserManager.SupportsUserEmail)
         {
             throw new NotSupportedException("The default UI requires a user store with email support.");
         }
-        return (IUserEmailStore<ApplicationUser>)UserStore;
+        return (IUserEmailStore<EmployerUserApplication>)UserStore;
     }
 
     private sealed class InputModel

@@ -22,7 +22,7 @@ namespace ronwell_assignment.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ronwell_assignment.Data.ApplicationUser", b =>
+            modelBuilder.Entity("ronwell_assignment.Data.EmployerUserApplication", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -231,7 +231,7 @@ namespace ronwell_assignment.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("ronwell_assignment.Data.ApplicationUser", null)
+                    b.HasOne("ronwell_assignment.Data.EmployerUserApplication", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -240,7 +240,7 @@ namespace ronwell_assignment.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("ronwell_assignment.Data.ApplicationUser", null)
+                    b.HasOne("ronwell_assignment.Data.EmployerUserApplication", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -255,7 +255,7 @@ namespace ronwell_assignment.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ronwell_assignment.Data.ApplicationUser", null)
+                    b.HasOne("ronwell_assignment.Data.EmployerUserApplication", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -264,7 +264,7 @@ namespace ronwell_assignment.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("ronwell_assignment.Data.ApplicationUser", null)
+                    b.HasOne("ronwell_assignment.Data.EmployerUserApplication", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

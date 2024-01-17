@@ -8,18 +8,18 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using ronwell_assignment.Data;
+using ronwell_assignment.Models;
 
 namespace ronwell_assignment.Areas.Identity.Pages.Account.Manage
 {
     public class SetPasswordModel : PageModel
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<EmployerUserApplication> _userManager;
+        private readonly SignInManager<EmployerUserApplication> _signInManager;
 
         public SetPasswordModel(
-            UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            UserManager<EmployerUserApplication> userManager,
+            SignInManager<EmployerUserApplication> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;

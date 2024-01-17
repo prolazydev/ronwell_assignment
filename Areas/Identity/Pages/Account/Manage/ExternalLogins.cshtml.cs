@@ -11,20 +11,20 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using ronwell_assignment.Data;
+using ronwell_assignment.Models;
 
 namespace ronwell_assignment.Areas.Identity.Pages.Account.Manage
 {
     public class ExternalLoginsModel : PageModel
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly IUserStore<ApplicationUser> _userStore;
+        private readonly UserManager<EmployerUserApplication> _userManager;
+        private readonly SignInManager<EmployerUserApplication> _signInManager;
+        private readonly IUserStore<EmployerUserApplication> _userStore;
 
         public ExternalLoginsModel(
-            UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
-            IUserStore<ApplicationUser> userStore)
+            UserManager<EmployerUserApplication> userManager,
+            SignInManager<EmployerUserApplication> signInManager,
+            IUserStore<EmployerUserApplication> userStore)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -70,7 +70,7 @@ namespace ronwell_assignment.Areas.Identity.Pages.Account.Manage
                 .ToList();
 
             string passwordHash = null;
-            if (_userStore is IUserPasswordStore<ApplicationUser> userPasswordStore)
+            if (_userStore is IUserPasswordStore<EmployerUserApplication> userPasswordStore)
             {
                 passwordHash = await userPasswordStore.GetPasswordHashAsync(user, HttpContext.RequestAborted);
             }

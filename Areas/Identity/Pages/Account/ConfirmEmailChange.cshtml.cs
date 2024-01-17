@@ -10,16 +10,16 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using ronwell_assignment.Data;
+using ronwell_assignment.Models;
 
 namespace ronwell_assignment.Areas.Identity.Pages.Account
 {
     public class ConfirmEmailChangeModel : PageModel
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<EmployerUserApplication> _userManager;
+        private readonly SignInManager<EmployerUserApplication> _signInManager;
 
-        public ConfirmEmailChangeModel(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public ConfirmEmailChangeModel(UserManager<EmployerUserApplication> userManager, SignInManager<EmployerUserApplication> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;

@@ -1,8 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using ronwell_assignment.Data
+@using ronwell_assignment.Models
 
-@inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<EmployerUserApplication> SignInManager
+@inject UserManager<EmployerUserApplication> UserManager
 
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))

@@ -4,8 +4,9 @@
 @using Microsoft.AspNetCore.Authentication
 @using Microsoft.AspNetCore.Identity
 @using ronwell_assignment.Data
+@using ronwell_assignment.Models
 
-@inject SignInManager<ApplicationUser> SignInManager
+@inject SignInManager<EmployerUserApplication> SignInManager
 @inject ILogger<Login> Logger
 @inject NavigationManager NavigationManager
 @inject IdentityRedirectManager RedirectManager
