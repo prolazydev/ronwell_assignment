@@ -1,0 +1,58 @@
+﻿@page "/user/delete/{UserId}"
+@using Assignment.DTO
+@using Assignment.Services.Contracts
+@using Microsoft.AspNetCore.Authorization
+
+
+@inject IEmployee EmployeeService
+@inject NavigationManager NavigationManager
+@attribute [Authorize(Roles = "SuperAdmin,Admin")]
+
+<h3>Delete User</h3>
+
+@if (user != null)
+{
+    <p>Are you sure you want to delete the user with ID: <b>@user.Id?</b></p>
+    <hr />
+    <p>Username: @user.UserName</p>
+    <p>Email: @user.Email</p>
+    <p>Position: @user.Position</p>
+    <p>Salary: @user.Salary</p>
+
+    <div class="d-flex gap-2 align-content-center align-items-center">
+        <button type="button" class="btn btn-danger" @onclick="DeleteUser">Delete</button>
+        <NavLink class="link-dark" href="auth">Go Back</NavLink>
+    </div>
+}
+else
+{
+    <p>User not found or an error occurred while fetching user details.</p>
+}
+
+@code {
+    [Parameter]
+    public string UserId { get; set; } = string.Empty;
+
+    private UserDTO user;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Fetch user data based on the provided UserId
+        user = await GetUserDetailsAsync(UserId);
+    }
+
+    private async Task<UserDTO> GetUserDetailsAsync(string userId)
+    {
+        // Implement logic to retrieve user details from your data source
+        return await EmployeeService.GetUserByIdAsync(userId);
+    }
+
+    private async Task DeleteUser()
+    {
+        // Implement logic to delete the user (you need to implement this)
+        // For example, call a service method to delete the user from the database
+        await EmployeeService.DeleteUserAsync(UserId);
+        // Optionally, you can redirect to another page after successful deletion
+        NavigationManager.NavigateTo("/auth");
+    }
+}
