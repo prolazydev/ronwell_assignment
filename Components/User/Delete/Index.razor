@@ -19,7 +19,10 @@
     <p>Position: @user.Position</p>
     <p>Salary: @user.Salary</p>
 
-    <button type="button" class="btn btn-danger" @onclick="DeleteUser">Delete</button>
+    <div class="d-flex gap-2 align-content-center align-items-center">
+        <button type="button" class="btn btn-danger" @onclick="DeleteUser">Delete</button>
+        <NavLink class="link-dark" href="auth">Go Back</NavLink>
+    </div>
 }
 else
 {

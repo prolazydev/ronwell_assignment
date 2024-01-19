@@ -4,6 +4,7 @@
 @using Microsoft.AspNetCore.Authorization
 
 @inject IEmployee EmployeeService
+@inject NavigationManager NavigationManager
 @attribute [Authorize(Roles = "SuperAdmin,Admin")]
 
 <div class="container p-5">
@@ -71,5 +72,4 @@
         // You need to implement a method to retrieve the user data
         user = await EmployeeService.GetUserByIdAsync(UserId);
     }
-
 }
