@@ -1,0 +1,66 @@
+﻿@page "/auth"
+
+@using Assignment.DTO
+@using Assignment.Services.Contracts
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.QuickGrid
+
+@inject IEmployee EmployeeService
+@inject NavigationManager NavigationManager
+
+@attribute [Authorize]
+@attribute [Authorize(Roles = "SuperAdmin,Admin")]
+
+<PageTitle>Auth</PageTitle>
+
+@if (users.Any())
+{
+    <div class="m-auto" style="width: fit-content;">
+        <h1>Users</h1>
+        <NavLink class="d-flex link-dark ms-auto pe-4 text-end" style="width: fit-content;" href="create">Create</NavLink>
+
+        <QuickGrid Items="@users" TGridItem="UserDTO" Pagination="@pagination">
+            <PropertyColumn Property="@(u => u.Id)" Sortable="true" />
+            <PropertyColumn Property="@(u => u.UserName)" Sortable="true" />
+            <PropertyColumn Property="@(u => u.Position)" Sortable="true" />
+            <PropertyColumn Property="@(u => u.Salary)" Sortable="true" />
+
+            <TemplateColumn Title="Actions">
+                <button class="btn btn-secondary" @onclick="@(() => ViewUser(context))">View</button>
+                <button class="btn btn-primary" @onclick="@(() => EditUser(context))">Edit</button>
+                <button class="btn btn-danger" @onclick="@(() => DeleteUser(context))">Delete</button>
+            </TemplateColumn>
+        </QuickGrid>
+        <Paginator State="@pagination" />
+    </div>
+} else {
+    <p><em>Loading...</em></p>
+}
+
+
+@code {
+    private IQueryable<UserDTO> users = new List<UserDTO>().AsQueryable();
+
+    PaginationState pagination = new PaginationState { ItemsPerPage = 5 };
+
+    protected override async Task OnInitializedAsync()
+    {
+        users = await EmployeeService.GetAllUsersAsync();
+        await base.OnInitializedAsync();
+    }
+
+    private void ViewUser(UserDTO user)
+    {
+        NavigationManager.NavigateTo($"/user/view/{user.Id}");
+    }
+
+    private void EditUser(UserDTO user)
+    {
+        NavigationManager.NavigateTo($"/user/edit/{user.Id}");
+    }
+
+    private void DeleteUser(UserDTO user)
+    {
+        NavigationManager.NavigateTo($"/user/delete/{user.Id}");
+    }
+}

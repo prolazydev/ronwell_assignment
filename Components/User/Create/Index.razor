@@ -1,0 +1,83 @@
+﻿@page "/create"
+
+@using Assignment.DTO
+@using Assignment.Services.Contracts
+@using Microsoft.AspNetCore.Authorization
+
+@inject IEmployee EmployeeService
+@inject NavigationManager NavigationManager
+
+@attribute [Authorize]
+@attribute [Authorize(Roles = "SuperAdmin,Admin")]
+
+<div style="width: 450px;">
+<EditForm Model="newUser" OnValidSubmit="HandleValidSubmit">
+    <h3>Create User</h3>
+    
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label for="UserName">Username:</label>
+        <InputText id="UserName" @bind-Value="newUser.UserName" class="form-control" />
+        <ValidationMessage For="@(() => newUser.UserName)" />
+    </div>
+
+    <div class="form-group">
+        <label for="Email">Email:</label>
+        <InputText id="Email" @bind-Value="newUser.Email" class="form-control" />
+        <ValidationMessage For="@(() => newUser.Email)" />
+    </div>
+
+    <div class="form-group">
+        <label for="Position">Position:</label>
+        <InputText id="Position" @bind-Value="newUser.Position" class="form-control" />
+        <ValidationMessage For="@(() => newUser.Position)" />
+    </div>
+
+    <div class="form-group">
+        <label for="Roles">Roles:</label>
+        <select id="Roles" @bind="newUser.Roles" class="form-control" multiple>
+        @foreach (var role in allRoles)
+        {
+            <option value="@role">@role</option>
+        }
+        </select>
+        <ValidationMessage For="@(() => newUser.Roles)" />
+    </div>
+
+    <div class="form-group">
+        <label for="Salary">Salary:</label>
+        <InputNumber id="Salary" @bind-Value="newUser.Salary" class="form-control" />
+        <ValidationMessage For="@(() => newUser.Salary)" />
+    </div>
+
+    <div>
+        @string.Join(", ", newUser.Roles)
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-2">Create User</button>
+</EditForm>
+</div>
+
+@code {
+    private CreateUserDTO newUser = new CreateUserDTO();
+    private string[] allRoles = []; // Populate this with available roles
+    
+    protected override async Task OnInitializedAsync()
+    {
+        allRoles = await EmployeeService.GetAllRolesAsync();
+        await base.OnInitializedAsync();
+    }
+    private async Task HandleValidSubmit()
+    {
+        var modelUser = new UserDTO
+        {
+            UserName = newUser.UserName,
+            Email = newUser.Email,
+            Position = newUser.Position,
+            Salary = newUser.Salary,
+            Roles = newUser.Roles.ToList()
+        };
+        await EmployeeService.AddUserAsync(modelUser);
+        NavigationManager.NavigateTo("/auth");
+    }
+}

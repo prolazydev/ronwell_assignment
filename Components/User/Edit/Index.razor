@@ -1,0 +1,90 @@
+﻿@page "/user/edit/{UserId}"
+
+@using Assignment.DTO
+@using Assignment.Services.Contracts
+@using Microsoft.AspNetCore.Authorization
+
+@inject IEmployee EmployeeService
+@inject NavigationManager NavigationManager
+@attribute [Authorize(Roles = "SuperAdmin,Admin")]
+
+<h3>Edit User</h3>
+
+@if (user != null)
+{
+    <EditForm Model="user" OnValidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator />
+
+        <div class="form-group">
+            <label for="UserName">Username:</label>
+            <InputText id="UserName" @bind-Value="user.UserName" class="form-control" />
+            <ValidationMessage For="@(() => user.UserName)" />
+        </div>
+
+        <div class="form-group">
+            <label for="Email">Email:</label>
+            <InputText id="Email" @bind-Value="user.Email" class="form-control" />
+            <ValidationMessage For="@(() => user.Email)" />
+        </div>
+
+        <div class="form-group">
+            <label for="Position">Position:</label>
+            <InputText id="Position" @bind-Value="user.Position" class="form-control" />
+            <ValidationMessage For="@(() => user.Position)" />
+        </div>
+
+        <div class="form-group">
+            <label for="Roles">Roles:</label>
+            <select id="Roles" @bind="selectedRoles" class="form-control" multiple>
+                @foreach (var role in allRoles)
+                {
+                    <option value="@role">@role</option>
+                }
+            </select>
+            <ValidationMessage For="@(() => selectedRoles)" />
+        </div>
+        <p>Selected: @string.Join(" ,", selectedRoles)</p>
+
+        <div class="form-group">
+            <label for="Salary">Salary:</label>
+            <InputNumber id="Salary" @bind-Value="user.Salary" class="form-control" />
+            <ValidationMessage For="@(() => user.Salary)" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </EditForm>
+}
+else
+{
+    <p>User not found or an error occurred while fetching user details.</p>
+}
+
+@code {
+    [Parameter]
+    public string UserId { get; set; } = string.Empty;
+
+    private string[] allRoles = []; // Populate this with available roles
+    private string[] selectedRoles = [];
+    private UserDTO user;
+
+    protected override async Task OnInitializedAsync()
+    {
+        allRoles = await EmployeeService.GetAllRolesAsync();
+        user = await EmployeeService.GetUserByIdAsync(UserId);
+        
+        selectedRoles = user.Roles.ToArray();
+
+        await base.OnInitializedAsync();
+    }
+
+
+    private async Task HandleValidSubmit()
+    {
+        user.Roles = selectedRoles.ToList();
+        var updated = await EmployeeService.UpdateUserAsync(user);
+        if (updated)
+            NavigationManager.NavigateTo("/user/view/" + UserId);
+        else
+            Console.WriteLine("Error updating user details.");
+    }
+}

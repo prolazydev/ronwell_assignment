@@ -1,0 +1,75 @@
+﻿@page "/user/view/{UserId}"
+@using Assignment.DTO
+@using Assignment.Services.Contracts
+@using Microsoft.AspNetCore.Authorization
+
+@inject IEmployee EmployeeService
+@attribute [Authorize(Roles = "SuperAdmin,Admin")]
+
+<div class="container p-5">
+    <div class="shadow-sm d-flex flex-column gap-1 py-3 align-content-center justify-content-center">
+        <h1 class="text-center">@user.UserName</h1>
+        <hr class="w-75 m-auto" style="height: 3px"/>
+
+        <div class="row mt-3 w-auto">
+            <div class="col-8 m-auto">
+                <div class="row">
+                    <div class="col-2">
+                        <h5>Id:</h5>
+                    </div>
+                    <div class="col-auto">
+                        <h5>@user.Id</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <h5>Email:</h5>
+                    </div>
+                    <div class="col-6">
+                        <h5>@user.Email</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <h5>Position:</h5>
+                    </div>
+                    <div class="col-6">
+                        <h5>@user.Position</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <h5>Salary:</h5>
+                    </div>
+                    <div class="col-6">
+                        <h5>@user.Salary</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <h5>Roles:</h5>
+                    </div>
+                    <div class="col-6">
+                        <h5>@string.Join(", ", user.Roles)</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<NavLink class="link-dark" href="auth">Go Back</NavLink>
+
+@code {
+    [Parameter]
+    public string UserId { get; set; } = string.Empty;
+
+    private UserDTO user = new UserDTO();
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Fetch user data based on the provided UserId
+        // You need to implement a method to retrieve the user data
+        user = await EmployeeService.GetUserByIdAsync(UserId);
+    }
+
+}
