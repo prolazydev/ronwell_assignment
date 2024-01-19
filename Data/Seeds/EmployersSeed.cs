@@ -61,8 +61,8 @@ public static class EmployersSeed
         }
 
         await SeedUserAsync(userManager, roleManager, superAdmin, "SuperAdmin", "Admin123");
-        await SeedUserAsync(userManager, roleManager, ceo, "Admin", "Teacher123");
-        await SeedUserAsync(userManager, roleManager, manager, "Admin", "Student123");
+        await SeedUserAsync(userManager, roleManager, ceo, "Admin", "Admin123");
+        await SeedUserAsync(userManager, roleManager, manager, "Admin", "manager123");
 
         // Avoid redoing the seeding...
         context.SeedStatus.Add(new Seeds { IsSeedDataApplied = true });
